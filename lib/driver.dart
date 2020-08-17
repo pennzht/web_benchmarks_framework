@@ -17,13 +17,16 @@ const bool isCanvasKit = bool.fromEnvironment('FLUTTER_WEB_USE_SKIA', defaultVal
 ///
 /// When adding a new benchmark, add it to this map. Make sure that the name
 /// of your benchmark is unique.
-final Map<String, RecorderFactory> _benchmarks = <String, RecorderFactory>{
-  // Add your benchmarks here.
-};
+Map<String, RecorderFactory> _benchmarks;
 
 final LocalBenchmarkServerClient _client = LocalBenchmarkServerClient();
 
 Future<void> runBenchmarks(Map<String, RecorderFactory> benchmarks) async {
+  assert(benchmarks != null);
+
+  // Set local benchmarks.
+  _benchmarks = benchmarks;
+
   // Check if the benchmark server wants us to run a specific benchmark.
   final String nextBenchmark = await _client.requestNextBenchmark();
 
