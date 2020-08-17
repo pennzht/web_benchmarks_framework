@@ -6,8 +6,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:path/path.dart' as path;
-import 'package:flutter_devicelab/framework/framework.dart';
-import 'package:flutter_devicelab/framework/utils.dart';
+import 'framework.dart';
+import 'utils.dart';
 
 final List<String> flutterAssets = <String>[
   'assets/flutter_assets/AssetManifest.json',

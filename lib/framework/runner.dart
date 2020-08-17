@@ -9,8 +9,8 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:vm_service_client/vm_service_client.dart';
 
-import 'package:flutter_devicelab/framework/utils.dart';
-import 'package:flutter_devicelab/framework/adb.dart' show DeviceIdEnvName;
+import 'utils.dart';
+import 'adb.dart' show DeviceIdEnvName;
 
 /// Runs a task in a separate Dart VM and collects the result using the VM
 /// service protocol.

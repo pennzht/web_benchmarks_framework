@@ -7,25 +7,7 @@ import 'dart:convert' show json;
 import 'dart:html' as html;
 import 'dart:math' as math;
 
-import 'package:macrobenchmarks/src/web/bench_text_layout.dart';
-import 'package:macrobenchmarks/src/web/bench_text_out_of_picture_bounds.dart';
-
-import 'package:gallery/benchmarks/gallery_automator.dart' show DemoType, typeOfDemo;
-
-import 'src/web/bench_build_material_checkbox.dart';
-import 'src/web/bench_card_infinite_scroll.dart';
-import 'src/web/bench_child_layers.dart';
-import 'src/web/bench_clipped_out_pictures.dart';
-import 'src/web/bench_draw_rect.dart';
-import 'src/web/bench_dynamic_clip_on_static_picture.dart';
-import 'src/web/bench_mouse_region_grid_hover.dart';
-import 'src/web/bench_mouse_region_grid_scroll.dart';
-import 'src/web/bench_paths.dart';
-import 'src/web/bench_picture_recording.dart';
-import 'src/web/bench_simple_lazy_text_scroll.dart';
-import 'src/web/bench_text_out_of_picture_bounds.dart';
-import 'src/web/gallery/gallery_recorder.dart';
-import 'src/web/recorder.dart';
+import 'recorder.dart';
 
 typedef RecorderFactory = Recorder Function();
 
