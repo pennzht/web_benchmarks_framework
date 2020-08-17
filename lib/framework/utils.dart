@@ -222,22 +222,22 @@ Future<String> getDartVersion() async {
 }
 
 Future<String> getCurrentFlutterRepoCommit() async {
-  final Directory flutterDirectory = await flutterDirectory;
+  final Directory _flutterDirectory = await flutterDirectory;
 
-  if (!dir('${flutterDirectory.path}/.git').existsSync()) {
+  if (!dir('${_flutterDirectory.path}/.git').existsSync()) {
     return null;
   }
 
-  return await inDirectory<String>(flutterDirectory, () {
+  return await inDirectory<String>(_flutterDirectory, () {
     return eval('git', <String>['rev-parse', 'HEAD']);
   });
 }
 
 Future<DateTime> getFlutterRepoCommitTimestamp(String commit) async {
-  final Directory flutterDirectory = await flutterDirectory;
+  final Directory _flutterDirectory = await flutterDirectory;
 
   // git show -s --format=%at 4b546df7f0b3858aaaa56c4079e5be1ba91fbb65
-  return await inDirectory<DateTime>(flutterDirectory, () async {
+  return await inDirectory<DateTime>(_flutterDirectory, () async {
     final String unixTimestamp = await eval('git', <String>[
       'show',
       '-s',
