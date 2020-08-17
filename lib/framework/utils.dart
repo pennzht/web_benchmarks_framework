@@ -221,19 +221,23 @@ Future<String> getDartVersion() async {
   return version.replaceAll('"', "'");
 }
 
-Future<String> getCurrentFlutterRepoCommit() {
+Future<String> getCurrentFlutterRepoCommit() async {
+  final Directory flutterDirectory = await realFlutterDirectory;
+
   if (!dir('${flutterDirectory.path}/.git').existsSync()) {
-    return Future<String>.value(null);
+    return null;
   }
 
-  return inDirectory<String>(flutterDirectory, () {
+  return await inDirectory<String>(flutterDirectory, () {
     return eval('git', <String>['rev-parse', 'HEAD']);
   });
 }
 
-Future<DateTime> getFlutterRepoCommitTimestamp(String commit) {
+Future<DateTime> getFlutterRepoCommitTimestamp(String commit) async {
+  final Directory flutterDirectory = await realFlutterDirectory;
+
   // git show -s --format=%at 4b546df7f0b3858aaaa56c4079e5be1ba91fbb65
-  return inDirectory<DateTime>(flutterDirectory, () async {
+  return await inDirectory<DateTime>(flutterDirectory, () async {
     final String unixTimestamp = await eval('git', <String>[
       'show',
       '-s',
@@ -462,6 +466,24 @@ Future<String> evalFlutter(String command, {
   return eval(flutterCommand, args,
       canFail: canFail, environment: environment, stderr: stderr);
 }
+
+Future<String> get realDartBin async => path.join(
+  (await realFlutterDirectory).path,
+  'bin',
+  'cache',
+  'dart-sdk',
+  'bin',
+  'dart',
+);
+
+Future<String> get realPubBin async => path.join(
+  (await realFlutterDirectory).path,
+  'bin',
+  'cache',
+  'dart-sdk',
+  'bin',
+  'pub',
+);
 
 String get dartBin =>
     path.join(flutterDirectory.path, 'bin', 'cache', 'dart-sdk', 'bin', 'dart');

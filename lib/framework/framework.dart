@@ -87,7 +87,7 @@ class _TaskRunner {
       beforeRunningDartInstances.forEach(print);
 
       print('enabling configs for macOS, Linux, Windows, and Web...');
-      final int configResult = await exec(path.join(flutterDirectory.path, 'bin', 'flutter'), <String>[
+      final int configResult = await exec(flutterCommand, <String>[
         'config',
         '--enable-macos-desktop',
         '--enable-windows-desktop',
