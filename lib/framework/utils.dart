@@ -514,6 +514,11 @@ void cd(dynamic directory) {
 // TODO: update to correct directory.
 Directory get flutterDirectory => Directory.current.parent.parent;
 
+Future<Directory> get realFlutterDirectory async {
+  String flutterLocation = await eval('which', ['flutter']);
+  return Directory(flutterLocation).parent.parent;
+}
+
 const String flutterCommand = 'flutter';
 
 String requireEnvVar(String name) {
