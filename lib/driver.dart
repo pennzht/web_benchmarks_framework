@@ -17,7 +17,7 @@ const bool isCanvasKit = bool.fromEnvironment('FLUTTER_WEB_USE_SKIA', defaultVal
 ///
 /// When adding a new benchmark, add it to this map. Make sure that the name
 /// of your benchmark is unique.
-final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
+final Map<String, RecorderFactory> _benchmarks = <String, RecorderFactory>{
   // Add your benchmarks here.
 };
 
@@ -37,7 +37,7 @@ Future<void> runBenchmarks(Map<String, RecorderFactory> benchmarks) async {
 }
 
 Future<void> _runBenchmark(String benchmarkName) async {
-  final RecorderFactory recorderFactory = benchmarks[benchmarkName];
+  final RecorderFactory recorderFactory = _benchmarks[benchmarkName];
 
   if (recorderFactory == null) {
     _fallbackToManual('Benchmark $benchmarkName not found.');
@@ -98,7 +98,7 @@ void _fallbackToManual(String error) {
       <!-- Absolutely position it so it receives the clicks and not the glasspane -->
       <ul style="position: absolute">
         ${
-          benchmarks.keys
+          _benchmarks.keys
             .map((String name) => '<li><button id="$name">$name</button></li>')
             .join('\n')
         }
@@ -106,7 +106,7 @@ void _fallbackToManual(String error) {
     </div>
   ''', validator: html.NodeValidatorBuilder()..allowHtml5()..allowInlineStyles());
 
-  for (final String benchmarkName in benchmarks.keys) {
+  for (final String benchmarkName in _benchmarks.keys) {
     final html.Element button = html.document.querySelector('#$benchmarkName');
     button.addEventListener('click', (_) {
       final html.Element manualPanel = html.document.querySelector('#manual-panel');
@@ -255,7 +255,7 @@ class LocalBenchmarkServerClient {
       '/next-benchmark',
       method: 'POST',
       mimeType: 'application/json',
-      sendData: json.encode(benchmarks.keys.toList()),
+      sendData: json.encode(_benchmarks.keys.toList()),
     );
 
     // 404 is expected in the following cases:
