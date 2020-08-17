@@ -206,7 +206,7 @@ void section(String title) {
 
 Future<String> getDartVersion() async {
   // The Dart VM returns the version text to stderr.
-  final ProcessResult result = _processManager.runSync(<String>[dartBin, '--version']);
+  final ProcessResult result = _processManager.runSync(<String>[await realDartBin, '--version']);
   String version = (result.stderr as String).trim();
 
   // Convert:
@@ -491,7 +491,9 @@ String get dartBin =>
 String get pubBin =>
     path.join(flutterDirectory.path, 'bin', 'cache', 'dart-sdk', 'bin', 'pub');
 
-Future<int> dart(List<String> args) => exec(dartBin, <String>['--disable-dart-dev', ...args]);
+Future<int> dart(List<String> args) async {
+  return await exec(await realDartBin, <String>['--disable-dart-dev', ...args]);
+}
 
 /// Returns a future that completes with a path suitable for JAVA_HOME
 /// or with null, if Java cannot be found.
