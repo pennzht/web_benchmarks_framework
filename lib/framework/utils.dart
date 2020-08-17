@@ -485,12 +485,6 @@ Future<String> get realPubBin async => path.join(
   'pub',
 );
 
-String get dartBin =>
-    path.join(flutterDirectory.path, 'bin', 'cache', 'dart-sdk', 'bin', 'dart');
-
-String get pubBin =>
-    path.join(flutterDirectory.path, 'bin', 'cache', 'dart-sdk', 'bin', 'pub');
-
 Future<int> dart(List<String> args) async {
   return await exec(await realDartBin, <String>['--disable-dart-dev', ...args]);
 }
@@ -534,9 +528,6 @@ void cd(dynamic directory) {
   if (!d.existsSync())
     throw FileSystemException('Cannot cd into directory that does not exist', d.toString());
 }
-
-// TODO: update to correct directory.
-Directory get flutterDirectory => Directory.current.parent.parent;
 
 Future<Directory> get realFlutterDirectory async {
   String flutterLocation = await eval('which', ['flutter']);
