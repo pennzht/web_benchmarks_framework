@@ -206,7 +206,7 @@ void section(String title) {
 
 Future<String> getDartVersion() async {
   // The Dart VM returns the version text to stderr.
-  final ProcessResult result = _processManager.runSync(<String>[await realDartBin, '--version']);
+  final ProcessResult result = _processManager.runSync(<String>[await dartBin, '--version']);
   String version = (result.stderr as String).trim();
 
   // Convert:
@@ -222,7 +222,7 @@ Future<String> getDartVersion() async {
 }
 
 Future<String> getCurrentFlutterRepoCommit() async {
-  final Directory flutterDirectory = await realFlutterDirectory;
+  final Directory flutterDirectory = await flutterDirectory;
 
   if (!dir('${flutterDirectory.path}/.git').existsSync()) {
     return null;
@@ -234,7 +234,7 @@ Future<String> getCurrentFlutterRepoCommit() async {
 }
 
 Future<DateTime> getFlutterRepoCommitTimestamp(String commit) async {
-  final Directory flutterDirectory = await realFlutterDirectory;
+  final Directory flutterDirectory = await flutterDirectory;
 
   // git show -s --format=%at 4b546df7f0b3858aaaa56c4079e5be1ba91fbb65
   return await inDirectory<DateTime>(flutterDirectory, () async {
@@ -467,8 +467,8 @@ Future<String> evalFlutter(String command, {
       canFail: canFail, environment: environment, stderr: stderr);
 }
 
-Future<String> get realDartBin async => path.join(
-  (await realFlutterDirectory).path,
+Future<String> get dartBin async => path.join(
+  (await flutterDirectory).path,
   'bin',
   'cache',
   'dart-sdk',
@@ -476,8 +476,8 @@ Future<String> get realDartBin async => path.join(
   'dart',
 );
 
-Future<String> get realPubBin async => path.join(
-  (await realFlutterDirectory).path,
+Future<String> get pubBin async => path.join(
+  (await flutterDirectory).path,
   'bin',
   'cache',
   'dart-sdk',
@@ -486,7 +486,7 @@ Future<String> get realPubBin async => path.join(
 );
 
 Future<int> dart(List<String> args) async {
-  return await exec(await realDartBin, <String>['--disable-dart-dev', ...args]);
+  return await exec(await dartBin, <String>['--disable-dart-dev', ...args]);
 }
 
 /// Returns a future that completes with a path suitable for JAVA_HOME
@@ -529,7 +529,7 @@ void cd(dynamic directory) {
     throw FileSystemException('Cannot cd into directory that does not exist', d.toString());
 }
 
-Future<Directory> get realFlutterDirectory async {
+Future<Directory> get flutterDirectory async {
   String flutterLocation = await eval('which', ['flutter']);
   return Directory(flutterLocation).parent.parent;
 }
