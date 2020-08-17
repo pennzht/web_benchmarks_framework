@@ -23,7 +23,7 @@ final Map<String, RecorderFactory> benchmarks = <String, RecorderFactory>{
 
 final LocalBenchmarkServerClient _client = LocalBenchmarkServerClient();
 
-Future<void> main() async {
+Future<void> runBenchmarks(Map<String, RecorderFactory> benchmarks) async {
   // Check if the benchmark server wants us to run a specific benchmark.
   final String nextBenchmark = await _client.requestNextBenchmark();
 
