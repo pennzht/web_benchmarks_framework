@@ -447,7 +447,7 @@ Future<int> flutter(String command, {
   Map<String, String> environment,
 }) {
   final List<String> args = flutterCommandArgs(command, options);
-  return exec(path.join(flutterDirectory.path, 'bin', 'flutter'), args,
+  return exec(flutterCommand, args,
       canFail: canFail, environment: environment);
 }
 
@@ -459,7 +459,7 @@ Future<String> evalFlutter(String command, {
   StringBuffer stderr, // if not null, the stderr will be written here.
 }) {
   final List<String> args = flutterCommandArgs(command, options);
-  return eval(path.join(flutterDirectory.path, 'bin', 'flutter'), args,
+  return eval(flutterCommand, args,
       canFail: canFail, environment: environment, stderr: stderr);
 }
 
