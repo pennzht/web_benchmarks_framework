@@ -511,7 +511,10 @@ void cd(dynamic directory) {
     throw FileSystemException('Cannot cd into directory that does not exist', d.toString());
 }
 
+// TODO: update to correct directory.
 Directory get flutterDirectory => Directory.current.parent.parent;
+
+const String flutterCommand = 'flutter';
 
 String requireEnvVar(String name) {
   final String value = Platform.environment[name];
