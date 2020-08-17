@@ -13,8 +13,6 @@ typedef RecorderFactory = Recorder Function();
 
 const bool isCanvasKit = bool.fromEnvironment('FLUTTER_WEB_USE_SKIA', defaultValue: false);
 
-const String _galleryBenchmarkPrefix = 'gallery_v2';
-
 /// List of all benchmarks that run in the devicelab.
 ///
 /// When adding a new benchmark, add it to this map. Make sure that the name
