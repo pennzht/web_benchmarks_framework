@@ -21,11 +21,13 @@ import 'framework/utils.dart';
 const int benchmarkServerPort = 9999;
 const int chromeDebugPort = 10000;
 
-Future<TaskResult> runWebBenchmark({ @required bool useCanvasKit }) async {
+Future<TaskResult> runWebBenchmark({
+  @required String macrobenchmarksDirectory,
+  @required String entryPoint,
+  @required bool useCanvasKit,
+}) async {
   // Reduce logging level. Otherwise, package:webkit_inspection_protocol is way too spammy.
   Logger.root.level = Level.INFO;
-  // TODO: add path for benchmarks driver.
-  final String macrobenchmarksDirectory = path.join(flutterDirectory.path, 'dev', 'benchmarks', 'macrobenchmarks');
   return await inDirectory(macrobenchmarksDirectory, () async {
     // TODO: update `evalFlutter`.
     await evalFlutter('build', options: <String>[
@@ -35,8 +37,7 @@ Future<TaskResult> runWebBenchmark({ @required bool useCanvasKit }) async {
         '--dart-define=FLUTTER_WEB_USE_SKIA=true',
       '--profile',
       '-t',
-      // TODO: update entrance.
-      'lib/web_benchmarks.dart',
+      entryPoint,
     ]);
     final Completer<List<Map<String, dynamic>>> profileData = Completer<List<Map<String, dynamic>>>();
     final List<Map<String, dynamic>> collectedProfiles = <Map<String, dynamic>>[];
